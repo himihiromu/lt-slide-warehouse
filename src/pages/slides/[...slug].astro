@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+import "reveal.js/dist/reveal.css";
+import "reveal.js/dist/theme/black.css";
+//const Reveal = require('reveal.js')
+export async function getStaticPaths() {
+    const slideEntries = await getCollection('slides');
+    return slideEntries.map(entry => {
+        console.log(entry)
+        return ({
+            params: { slug: entry.slug }, props: { entry },
+        })
+    });
+}
+
+// params
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+console.log(Content)
+---
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{entry.data.title}</title>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <Content />
+        </div>
+    </div>
+</body>
+</html>
+
+
+<script>
+    import Reveal from "reveal.js";
+    
+    const reveal = document.querySelector(".reveal");
+    if(reveal) {
+        const deck = new Reveal({
+            plugins: [],
+        });
+        deck.initialize();
+    }
+</script>
