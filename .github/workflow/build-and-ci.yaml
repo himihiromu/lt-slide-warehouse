@@ -10,10 +10,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 'lts/*'
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run build
+      - name: Setup Docker
+        run: docker build -t pandoc-astro-builder
+      - name: Astro & Pandoc Build
+        run: docker run --rm -it -w /io -v ${pwd}:/io pandoc-astro-builder bash -c "npm ci && npm run build"

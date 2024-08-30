@@ -4,7 +4,6 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import type { AstroIntegration } from "astro";
 import * as util from 'util';
-import { getDefaultSettings } from 'node:http2';
 
 
 export type PandocOptions = {
@@ -24,10 +23,10 @@ const defaultOptions = (): PandocOptions => {
         highlight: 'espresso',
         level: 2,
         slideDir: 'slides',
-        template: 'src\\slides\\slide-template\\slide-template.mdx',
+        template: 'src/slides/slide-template/slide-template.mdx',
         beforeFormat: 'markdown',
         outputFormat: 'revealjs',
-        outputFolder: 'content\\slides',
+        outputFolder: 'content/slides',
     }
 }
 
@@ -81,12 +80,12 @@ export default (pandocOpsions: Partial<PandocOptions> = {}): AstroIntegration =>
             if(err) throw err;
             
             tmpFiles.forEach(element => {
-                const fileName = `${fileURLToPath(config.srcDir + 'slides')}\\${element}`
+                const fileName = `${fileURLToPath(config.srcDir + 'slides')}/${element}`
                 const stats = fs.statSync(fileName);
                 if (stats.isDirectory()) {
                     return
                 }
-                const outputFile = `${fileURLToPath(config.srcDir + 'content\\slides')}\\${path.basename(element, '.md') + '.mdx'}`
+                const outputFile = `${fileURLToPath(config.srcDir + 'content/slides')}/${path.basename(element, '.md') + '.mdx'}`
                 console.log([...args, fileName])
                 execFile('pandoc', [...args, fileName]).then((stdout) => {
                     fs.writeFileSync( outputFile , stdout.stdout );

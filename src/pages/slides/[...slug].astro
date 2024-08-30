@@ -22,7 +22,7 @@ console.log(Content)
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>{entry.data.title}</title>
 </head>
 <body>
@@ -41,7 +41,7 @@ console.log(Content)
     const reveal = document.querySelector(".reveal");
     if(reveal) {
         const deck = new Reveal({
-            plugins: [],
+			transition: 'slide'
         });
         deck.initialize();
     }

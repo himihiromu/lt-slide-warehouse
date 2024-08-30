@@ -1,32 +1,101 @@
-% Habits
-% John Doe
-% March 22, 2005
+% GASで作業の自動化をしたい
+% Hiromu Tabuchi
+% July 22, 2023
 
-# In the morning
+# GASで作業の自動化をしたい
 
-## Getting up
+田渕 啓夢
 
-- Turn off alarm
-- Get out of bed
+# 目次
 
-## Breakfast
+- GASって？
+- 簡単な自動化
+- 共通関数を作る
+- claspを使う
+- 自己満
+- 参考
 
-- Eat eggs
-- Drink coffee
+# 自己紹介
 
-# In the evening
+# こいつは誰？
 
-## Dinner
+- 田渕 啓夢
+- ユーソナー（株） モバイル開発チーム
+- 3年目になってた。。。
+- 業務
+  - API開発、デスクトップアプリ開発、リリース管理、etc…
+- 趣味
+  - アイマスのオタク(最近U149を見てCD大人買いした)
+  - ゲームとか家事して寝るだけの生活してる
+  - 出会い系アプリは卒業しました
 
-- Eat spaghetti
-- Drink wine
+# GASって？
 
-------------------
+- シンプルなコードで Google Workspace を自動化および拡張します。
+  - ([公式サイト](https://developers.google.com/apps-script?hl=ja))
+- Googleのドキュメントやスライド、スプレッドシート等のアプリに独自の処理を作成することができる
+- JavaScriptでコードを作成できる
+- Googleアプリ版VBAみたいなイメージ
+- このスライドにも簡単なものを仕込みました。
+  - このスライドを開くと、お礼のメッセージが出ます。
 
-![picture of spaghetti](images/spaghetti.jpg)
+# 簡単な自動化
 
-## Going to sleep
+- なんとなく雰囲気を感じてもらえそうなものを用意しました。
+  - (すみません。動かすまで作れませんでした)
+  - 修正履歴をいい感じに残すスクリプト
+- JavaScriptを書く気持ちでスプシの情報管理や整理、作成ができる。
+- 定期的に実行するもの、ルーティン作業等の自動化におすすめです。
 
-- Get in bed
-- Count sheep
+# 共通関数を作る
 
+- 関数を別ファイルにまとめ、別スクリプトから呼び出すことが可能
+- 複数の場所で使用したいロジックをここに作成し、各アプリから呼び出す
+- (べた書きするより実行速度が遅くなってしまうらしい)
+
+-とはいえ..
+  - GASの画面で直接スクリプト編集するのめんどくね？
+  - 誰でも修正できるから壊れやすいじゃん
+  - JavaScriptだし、もうちょっと厳密に型で縛れない...?
+
+# claspを使う
+
+- clasp is 何?
+  - Google製CLI GAS開発ツール
+  - https://github.com/google/clasp
+- claspを使うと嬉しいこと
+  - ローカルPCでGAS開発ができるようになる
+  - コードのGit管理が容易にできる
+  - Nodeで使用できるため、ほかのjs資産を使用できる
+  - TypeScriptが使える
+
+# 自己満
+
+- GAS開発の辛いところ
+  - GASのAPIがわからん
+  - 実行時に一つのファイルにバンドル？されて実行される
+    - 別ファイルに分割しても同名関数があれば後勝ちになる(GASの実行環境で読みだされる順)
+  - tsからjsにコンパイルされるが、一部使えない構文などをしようするとすぐエラーを出してくる
+    - claspのおかげでpush時にエラーを出してくれたり、該当箇所をコメントアウトしてくれたりはする
+
+- 前述の辛みを一部解決するテンプレートリポジトリを作成したのでぜひ使ってください。
+  - https://github.com/himihiromu/clasp-gas-template
+
+- GAS開発の辛いところ
+  - GASのAPIがわからん
+    - @types/google-apps-scriptを使えば型情報を元に補完してくれる
+  - 一部使えない構文などを使用するとすぐエラーを出してくる
+    - webpackやrollupのGASプラグインを使用すれば体感半分ぐらい解決する。
+  - 実行時に一つのファイルに結合されて実行される
+    - 上記バンドルファイルを使って手元で1ファイルにしちゃえば解決する
+
+# 参考
+
+- GAS公式
+  - https://workspace.google.co.jp/intl/ja/products/apps-script/
+- GASドキュメント
+  - https://developers.google.com/apps-script?hl=ja
+- claspリポジトリ
+  - https://github.com/google/clasp
+- 私の自己満足リポジトリ
+  - https://github.com/himihiromu/clasp-gas-template
