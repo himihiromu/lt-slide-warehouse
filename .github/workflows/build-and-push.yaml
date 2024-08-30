@@ -19,7 +19,7 @@ jobs:
         run: docker build -t pandoc-astro-builder .
 
       - name: Astro & Pandoc Build
-        run: docker run --rm -it -w /io -v ${pwd}:/io pandoc-astro-builder bash -c "npm ci && npm run build"
+        run: docker run --rm -it -w /io -v ./:/io pandoc-astro-builder bash -c "npm ci && npm run build"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
