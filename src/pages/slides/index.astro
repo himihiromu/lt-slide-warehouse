@@ -1,6 +1,7 @@
 ---
 import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
+import HeaderLink from '../../components/HeaderLink.astro';
 import Footer from '../../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 import { getCollection } from 'astro:content';
@@ -91,9 +92,9 @@ console.log(posts)
 					{
 						posts.map((post) => (
 							<li>
-								<a href={`/slides/${post.slug}/`}>
+								<HeaderLink href={`/slides/${post.slug}/`}>
 									<h4 class="title">{post.data.title}</h4>
-								</a>
+								</HeaderLink>
 							</li>
 						))
 					}
