@@ -6,6 +6,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://example.com',
+	site: 'https://himihiromu.github.io',
+	base: '/lt-slide-warehouse',
 	integrations: [mdx(), sitemap(), sampleIntegrations()],
 });
