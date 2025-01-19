@@ -6,7 +6,6 @@ import "reveal.js/dist/theme/black.css";
 export async function getStaticPaths() {
     const slideEntries = await getCollection('slides');
     return slideEntries.map(entry => {
-        console.log(entry)
         return ({
             params: { slug: entry.slug }, props: { entry },
         })
@@ -16,7 +15,6 @@ export async function getStaticPaths() {
 // params
 const { entry } = Astro.props;
 const { Content } = await entry.render();
-console.log(Content)
 ---
 <!DOCTYPE html>
 <html lang="ja">

@@ -86,7 +86,6 @@ export default (pandocOpsions: Partial<PandocOptions> = {}): AstroIntegration =>
                     return
                 }
                 const outputFile = `${fileURLToPath(config.srcDir + 'content/slides')}/${path.basename(element, '.md') + '.md'}`
-                console.log([...args, fileName])
                 execFile('pandoc', [...args, fileName]).then((stdout) => {
                     fs.writeFileSync( outputFile , stdout.stdout );
                 }).catch(
