@@ -1,12 +1,11 @@
----
+<!-- ---
 import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
-import HeaderLink from '../../components/HeaderLink.astro';
 import Footer from '../../components/Footer.astro';
+import licensesJson from '../../content/licenses/licenses.json';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
-import { getCollection } from 'astro:content';
 
-const posts = (await getCollection('slides'))
+console.log(licensesJson)
 ---
 
 <!doctype html>
@@ -32,15 +31,15 @@ const posts = (await getCollection('slides'))
 				text-decoration: none;
 				transition: 0.2s ease;
 			}
-			ul li {
+			ul li:first-child {
 				width: 100%;
 				margin-bottom: 1rem;
 				text-align: center;
 			}
-			ul li img {
+			ul li:first-child img {
 				width: 100%;
 			}
-			ul li .title {
+			ul li:first-child .title {
 				font-size: 2.369rem;
 			}
 			ul li img {
@@ -85,21 +84,17 @@ const posts = (await getCollection('slides'))
 	</head>
 	<body>
 		<Header />
-		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<HeaderLink href={`/slides/${post.slug}/`}>
-									<h4 class="title">{post.data.title}</h4>
-								</HeaderLink>
-							</li>
-						))
-					}
-				</ul>
-			</section>
-		</main>
+		<ul>
+			{
+				Object.entries(licensesJson).map((license) => (
+					<li>
+						<p>
+							{license[0]}
+						</p>
+					</li>
+				))
+			}
+		</ul>
 		<Footer />
 	</body>
-</html>
+</html> -->
