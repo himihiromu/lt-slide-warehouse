@@ -11,16 +11,16 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
-    "@astrojs/mdx": "^4.0.6",
+    "@astrojs/mdx": "^4.0.8",
     "@astrojs/rss": "^4.0.11",
     "@astrojs/sitemap": "^3.2.1",
-    "astro": "^5.1.7",
+    "astro": "^5.2.1",
     "astro-command": "^0.0.7",
     "reveal.js": "^5.1.0",
     "typescript": "^5.7.3"
   },
   "devDependencies": {
-    "@types/reveal.js": "^5.0.4",
+    "@types/reveal.js": "^5.0.5",
     "license-checker": "^25.0.1"
   }
 }
