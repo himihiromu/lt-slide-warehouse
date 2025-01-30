@@ -53,11 +53,10 @@ author: himihiromu
 
 ## インストール
 
-### 方法
 - **公式サイト**: [公式サイト](https://pandoc.org/)からダウンロード。
 - **パッケージマネージャー**を使用してインストール。
 
-### コマンド例
+## コマンド例
 - Homebrew (macOS):
   ```bash
   brew install pandoc
@@ -68,24 +67,25 @@ author: himihiromu
   scoop install pandoc
   ```
 
-## 基本コマンド
+# 基本コマンド
 
-### MarkdownからPowerPoint (pptx) に変換
+## Markdown 2 PowerPoint
 - コマンド:
   ```bash
   pandoc input.md -o output.pptx
   ```
 
-### オプション例
+## オプション例
 - `-s`: スタンドアロンモード。
   - ファイル単体で使える形になる
 - `--reference-doc`: テンプレートファイル (例: potx) の指定。
   - 独自に作成したテンプレートを使用できる
 
-### テンプレート (potx) を使用した例
+## potxを使用した例
+
 - コマンド:
   ```bash
-  pandoc input.md -o output.pptx --reference-doc=template.potx
+  pandoc input.md -o output.pptx --reference-doc template.potx
   ```
 
 # Pandocを使ってできる事
@@ -130,10 +130,6 @@ author: himihiromu
 - [Pandoc](https://pandoc.org/)
 - [reveal.js](https://revealjs.com/)
 - [GitHub Pages](https://docs.github.com/ja/pages/getting-started-with-github-pages/about-github-pages)
-
-## デモ
-
-- 実際のスライド資料をデモンストレーション。
 
 # まとめ
 

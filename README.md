@@ -1,5 +1,17 @@
 # Astro Starter Kit: Blog
 
+Pandoc変換コマンド
+
+```bash
+pandoc --template src/slides/slide-template/slide-template.md -f markdown -t revealjs --slide-level 2 src\slides\pandoc-introduction.md -o output.html
+```
+
+```bash
+pandoc --print-default-data-file reference.pptx > custom-reference.pptx
+pandoc -f markdown  --slide-level 2 --reference-doc custom-reference.pptx src\slides\pandoc-introduction.md -o output.pptx
+```
+
+
 ```sh
 npm create astro@latest -- --template blog
 ```
