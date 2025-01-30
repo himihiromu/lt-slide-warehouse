@@ -1,18 +1,30 @@
+---
+title: Pandoc勉強会資料
+description: Pandoc紹介資料
+author: himihiromu
+---
+
 # Pandoc勉強会資料
 
 # 自己紹介
 
 ## 自己紹介情報
-- **名前**: [あなたの名前]
-- **部署**: [所属部署]
-- **趣味**: [趣味や特技]
+- **名前**: himihiromu
+- **部署**: モバイル開発
+- **趣味**: ゲームとかCD集め。
+- **好きなバンド**: 
+  - [ELLEGARDEN](https://ellegarden.jp/)
+  - [MONOEYES](https://www.monoeyes.net/)
+  - [BIGMAMA](https://bigmama-web.com/)
+  - [fripside](https://fripside.net/)
+  - [忘れらんねえよ](https://www.office-augusta.com/wasureranneyo/)
 
-## 本日のテーマ
+
+# 本日のテーマ
 - Pandocの紹介
 
 # 目次
 
-## セクション一覧
 1. Pandocとは
 2. Pandocの使い方
 3. Pandocを使ってできる事
@@ -114,10 +126,10 @@
 
 ## 使用技術
 
-- Astro
-- Pandoc
-- reveal.js
-- GitHub Pages
+- [Astro](https://github.com/withastro/astro)
+- [Pandoc](https://pandoc.org/)
+- [reveal.js](https://revealjs.com/)
+- [GitHub Pages](https://docs.github.com/ja/pages/getting-started-with-github-pages/about-github-pages)
 
 ## デモ
 
@@ -127,7 +139,7 @@
 
 ## Pandocの魅力
 
-- 多様な形式への対応力。
+- 多様な形式への変換が可能。
 - 簡単なコマンド操作で多数の形式のドキュメントを作成可能
 
 ## 参考リンク
