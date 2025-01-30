@@ -22,6 +22,7 @@ author: himihiromu
 
 # 本日のテーマ
 - Pandocの紹介
+- 自身の雑開発物紹介
 
 # 目次
 
@@ -35,7 +36,7 @@ author: himihiromu
 ## 概要
 
 - Pandocは、異なるドキュメント形式間で変換を行うユニバーサルなドキュメントコンバータです。
-- 対応形式: Markdown, HTML, LaTeX, PDF, Word, ePub, PowerPoint (pptx) など多数。
+- [対応形式](https://pandoc-doc-ja.readthedocs.io/ja/latest/users-guide.html#general-options): Markdown, HTML, LaTeX, PDF, Word, ePub, PowerPoint (pptx) など多数。
 - Haskell製
 
 ## 特徴
@@ -48,6 +49,7 @@ author: himihiromu
 
 - Markdownで作成したドキュメントをPDFやPowerPointに変換。
 - 複数の形式に対応するプレゼンテーション資料の作成。
+- 社内テンプレート等を利用した資料作成をGitで行うことができる
 
 # Pandocの使い方
 
@@ -57,12 +59,12 @@ author: himihiromu
 - **パッケージマネージャー**を使用してインストール。
 
 ## コマンド例
-- Homebrew (macOS):
+- [Homebrew (macOS)](https://formulae.brew.sh/formula/pandoc):
   ```bash
   brew install pandoc
   ```
 
-- Scoop (Windows):
+- [Scoop (Windows)](https://bjansen.github.io/scoop-apps/main/pandoc/):
   ```bash
   scoop install pandoc
   ```
@@ -76,6 +78,7 @@ author: himihiromu
   ```
 
 ## オプション例
+
 - `-s`: スタンドアロンモード。
   - ファイル単体で使える形になる
 - `--reference-doc`: テンプレートファイル (例: potx) の指定。
@@ -87,6 +90,8 @@ author: himihiromu
   ```bash
   pandoc input.md -o output.pptx --reference-doc template.potx
   ```
+※注意点
+Pandocで使用できる形へ整えてあげないとうまく動いてくれない事が多々ある
 
 # Pandocを使ってできる事
 
@@ -124,7 +129,7 @@ author: himihiromu
   - Pandocを活用して作成したスライド資料を管理・公開するプロジェクト。
   - 簡単にスライド資料を生成・配布可能。
 
-## 使用技術
+## 主な使用技術
 
 - [Astro](https://github.com/withastro/astro)
 - [Pandoc](https://pandoc.org/)
@@ -137,6 +142,7 @@ author: himihiromu
 
 - 多様な形式への変換が可能。
 - 簡単なコマンド操作で多数の形式のドキュメントを作成可能
+- テンプレートを利用したスライド資料への対応も可能
 
 ## 参考リンク
 
