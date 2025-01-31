@@ -49,13 +49,13 @@ author: himihiromu
 
 - Markdownで作成したドキュメントをPDFやPowerPointに変換。
 - 複数の形式に対応するプレゼンテーション資料の作成。
-- 社内テンプレート等を利用した資料作成をGitで行うことができる
+- 社内テンプレート等を利用した資料作成をGit管理で行うことができる
 
 # Pandocの使い方
 
 ## インストール
 
-- **公式サイト**: [公式サイト](https://pandoc.org/)からダウンロード。
+- **公式サイト**: [公式サイト](https://pandoc.org/installing.html)からダウンロード。
 - **パッケージマネージャー**を使用してインストール。
 
 ## コマンド例
@@ -119,6 +119,15 @@ Pandocで使用できる形へ整えてあげないとうまく動いてくれ�
 ## カスタマイズ
 
 - テンプレートやカスタムCSSを使って、見た目やレイアウトを自由に変更。
+
+# Pandocの微妙な点
+
+## 変換ツールに過ぎないこと
+
+- 変換前の形式をある程度整える必要がある
+- テンプレートに使用するファイルもPandoc用に整備が必要
+- [ライターオプション例](https://pandoc-doc-ja.readthedocs.io/ja/latest/users-guide.html#options-affecting-specific-writers)
+- 雑に使うだけなら[Marp](https://marp.app/)とかの方が使いやすいかも
 
 # Pandocを使った自己開発物の紹介
 
