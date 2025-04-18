@@ -21,7 +21,7 @@ author: himihiromu
 
 ## dotfilesとは？
 
-- ホームディレクトリに存在する各種設定ファイル（例: `.bashrc`, `.vimrc`, `.gitconfig`）をGit管理するためのりポジトリ
+- ホームディレクトリに存在する各種設定ファイル（例: `.bashrc`, `.vimrc`, `.gitconfig`）をGit管理するためのリポジトリ
 - [GitHubの例](https://github.com/search?q=dotfiles&type=repositories&s=stars&o=desc)
 
 ## dotfilesを管理する理由
