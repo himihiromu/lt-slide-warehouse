@@ -93,7 +93,7 @@ author: himihiromu
 - 他ツールとの組み合わせ
   - nix、homebrewとの連携による総合的な環境構築
 
-# chezmoiの活用事例
+# chezmoiの活用例
 
 ## 個人での使用例
 
