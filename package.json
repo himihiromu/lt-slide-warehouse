@@ -9,6 +9,10 @@
     "preview": "astro preview",
     "astro": "astro"
   },
+  "devDependencies": {
+    "@types/reveal.js": "^5.2.2",
+    "license-checker": "^25.0.1"
+  },
   "dependencies": {
     "@astrojs/check": "^0.9.8",
     "@astrojs/mdx": "^5.0.3",
@@ -17,10 +21,6 @@
     "astro": "^6.1.4",
     "astro-command": "^0.0.7",
     "reveal.js": "^6.0.0",
-    "typescript": "^6.0.2"
-  },
-  "devDependencies": {
-    "@types/reveal.js": "^5.2.2",
-    "license-checker": "^25.0.1"
+    "typescript": "^5.9.3"
   }
 }
