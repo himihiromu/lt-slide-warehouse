@@ -1,20 +1,20 @@
 ---
-import { getCollection } from 'astro:content';
-import "reveal.js/dist/reveal.css";
-import "reveal.js/dist/theme/black.css";
+import { getCollection, render } from 'astro:content';
+import "reveal.js/reveal.css";
+import "reveal.js/theme/black.css";
 //const Reveal = require('reveal.js')
 export async function getStaticPaths() {
     const slideEntries = await getCollection('slides');
     return slideEntries.map(entry => {
         return ({
-            params: { slug: entry.slug }, props: { entry },
+            params: { slug: entry.id }, props: { entry },
         })
     });
 }
 
 // params
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { Content } = await render(entry);
 ---
 <!DOCTYPE html>
 <html lang="ja">
