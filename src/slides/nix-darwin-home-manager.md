@@ -33,14 +33,6 @@ author: himihiromu
 - 実際にハマったこと
 - 今後どう使っていくか
 
-# なぜこの話をするのか
-
-- Mac の移行を簡略化したかった
-- 開発用マシンの状態をコードで管理したかった
-- macOS は設定変更できる箇所が多く、開発に必要なツール導入も多い
-- 手順書やコマンド列挙ベースではなく、構成ベースで管理したかった
-- 実際にやってみると便利さもつらさもあったので共有したい
-
 # 実際に困っていたこと
 
 - 社内の Intel Mac から M1 Mac への移行を経験した
@@ -48,6 +40,8 @@ author: himihiromu
 - セットアップのたびに入れるツールや変える設定が多い
 - shell 差分や環境差分で地味に崩れやすい
 - 「今の快適な状態」を再現するのが面倒
+- Mac の移行を簡略化したかった
+- 手順書ベースではなく、構成ベースで管理したかった
 
 # 代替案として考えたもの
 
@@ -57,7 +51,6 @@ author: himihiromu
 ## でもやりたくなかったこと
 - コマンドを順番に列挙して実行していく管理
 - 実行環境や手順差分に引っ張られる構成
-- 設定ファイル管理とパッケージ管理が全部一つに肥大化すること
 
 # なぜ Nix を選んだか
 
@@ -75,7 +68,6 @@ author: himihiromu
   - 専用の記法を持つ
 - 依存込みの内容から一意な store path が作られる
 - そのため、依存違いの別バージョンが共存しやすい
-- 「今の環境を上書きする」より「別の成果物を作る」感覚に近い
 
 # Nix の内部構造の話を少しだけ
 
@@ -94,11 +86,6 @@ author: himihiromu
   と書かれている
 - 結果として「何が標準なのか」が最初は分かりづらい
 
-## 参考
-- [Nix package manager](https://nixos.org/)
-- [nix-darwin README](https://github.com/nix-darwin/nix-darwin)
-- [Home Manager Manual](https://nix-community.github.io/home-manager/)
-
 # Nix 関連で今回使っているもの
 
 - **devShell**
@@ -110,20 +97,21 @@ author: himihiromu
 
 # devShell とは
 
-- プロジェクトごとの開発環境を定義しやすい
-- 言語やツールをローカル環境からある程度切り離せる
-- `flake.nix` に置くことで構成と一緒に管理しやすい
+- プロジェクトごとの開発環境を定義できる
+- 言語やツールをローカル環境から切り離せる
+- `flake.nix` に書くことで構成と一緒に管理できる
 
-## 現状
-- 使い始めてはいる
-- ただ、まだ本格活用までは行けていない
-- 方向性としてはかなり良さそう
+## 今回の devShell 定義
+- Python / Node.js / Java 8 / Java 21 / Go / Kotlin
+- 各言語のランタイムやツールチェーンを独立して管理
+- 詳細: [my-nix-package-control](https://github.com/himihiromu/my-nix-package-control)
 
 # nix-darwin とは
 
 - macOS 向けの Nix modules
-- macOS 設定や Homebrew 周りもまとめて管理できる
-- README でも flakes ベースの導入例が前面に出ている
+- macOS システム設定を宣言的に管理できる
+- Homebrew で入れた GUI アプリも管理可能
+- Mac を入れ替えた時の再現に使える
 
 ## 自分の用途
 - macOS 設定
@@ -142,13 +130,6 @@ author: himihiromu
 - ユーザー空間で使う各種パッケージ
 - 開発に必要なコマンド群
 
-# なぜ dotfiles を Nix に全部寄せなかったか
-
-- ファイル管理まで全部 Nix に寄せると構成が肥大化しやすい
-- shell ごとの差異を吸収するのがしんどい
-- 環境ごとの設定分岐も増えがち
-- 設定ファイルの管理は専用ツールのほうが扱いやすかった
-
 # chezmoi で管理しているもの
 
 - `.zshrc`
@@ -156,25 +137,17 @@ author: himihiromu
 - shell やエディタの設定ファイル
 - 環境ごとの差分が出やすいファイル群
 
-## なので
+## というわけで
 - 構成・パッケージ・OS設定は Nix
 - 設定ファイルは chezmoi
 
 # 今回の構成全体像
 
-- **nix-darwin**
-  - Mac 自体の設定
-  - Homebrew
-  - デスクトップアプリ管理
-- **home-manager**
-  - CLI ツール管理
-  - ユーザー環境の一部管理
-- **chezmoi**
-  - `.zshrc`
-  - `config.fish`
-  - その他設定ファイル管理
-- **devShell**
-  - 開発環境構成管理を試し始めている
+| nix-darwin | home-manager | chezmoi | devShell |
+|---|---|---|---|
+| Mac の設定 | CLI ツール | `.zshrc` | 言語別開発環境 |
+| Homebrew | パッケージ | `config.fish` | python / js |
+| デスクトップapp | コマンド群 | 設定ファイル | java / go / kotlin |
 
 # 成果物の位置付け
 
@@ -199,7 +172,6 @@ author: himihiromu
 - 何を入れているかをコードで追える
 - 構成の見直しや棚卸しがしやすい
 - Intel / Apple Silicon の違いも意識して整理しやすい
-  - ただし、まだそこはそこまで本格的には使い込めていない
 
 # 実際にハマったこと
 
