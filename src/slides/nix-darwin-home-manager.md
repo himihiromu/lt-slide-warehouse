@@ -1,10 +1,10 @@
 ---
-title: Nix で Mac 構成管理してみて分かった便利さとつらさ
+title: Nixではじめる宣言的関数型パッケージ管理
 description: nix-darwin と home-manager を使った macOS 構成管理の実践共有
 author: himihiromu
 ---
 
-# Nix で Mac 構成管理してみて分かった便利さとつらさ
+# Nixではじめる宣言的関数型パッケージ管理
 
 ## nix-darwin / home-manager / chezmoi の実践共有
 
@@ -33,20 +33,17 @@ author: himihiromu
 - 実際にハマったこと
 - 今後どう使っていくか
 
-# 実際に困っていたこと
+# 実際に困ってたこと
 
-Nixを知らない私
+- Nixを知らない私
+  - 社内でIntel MacからM1 Macへ設定移行
+  - その知見から自宅PCの設定見直し
+- 辛かったこと
+  - ツール設定
+  - Shell、環境差分
+  - 別PC設定の再現
 
-- 社内でIntel MacからM1 Macへ設定移行
-- その知見から自宅PCの設定見直し
-
-辛かったこと
-
-- ツール設定
-- Shell、環境差分
-- 別PC設定の再現
-
-# 代替案として考えたもの
+# 代替案の候補
 
 - dotfiles 管理
 - Ansible による構成管理
@@ -63,7 +60,7 @@ Nixを知らない私
 - 構成のコード化
 - 移行コマンドの削減
 
-# Nix 自体のざっくりした特徴
+# Nixのざっくり特徴
 
 - [Nix](https://nixos.org/)
   - パッケージ管理 + 構成管理の仕組み
@@ -79,7 +76,7 @@ Nixを知らない私
 - 依存によって同一パッケージを複数インストール可能
 - バージョン違いの共存や巻き戻しがしやすい
 
-# flake はexperimentalでデファクト
+# flake はexperimentalでde facto
 
 - `flakes` は Nix では experimental 扱い
 - でも構成例や周辺情報は flakes 前提が多い
@@ -87,7 +84,7 @@ Nixを知らない私
   `... nix-darwin recommends that beginners use flakes ...`
 - 初見だと「何が標準？」が分かりづらい
 
-# 今回使っているNix関連技術
+# 今回使うNix技術
 
 - **devShell**
   - プロジェクトごとの開発環境
@@ -96,7 +93,7 @@ Nixを知らない私
 - **Home Manager**
   - ユーザー環境・CLI ツールの管理
 
-# devShell とは
+# devShell って？
 
 - プロジェクトごとの開発環境を定義
 - 言語やツールをローカル環境から切り離す
@@ -107,7 +104,7 @@ Nixを知らない私
 - 各言語のランタイム・ツールチェーンを独立管理
 - 詳細: [my-nix-package-control](https://github.com/himihiromu/my-nix-package-control)
 
-# nix-darwin とは
+# nix-darwin って？
 
 - macOS 向けの Nix modules
 - システム設定を宣言的に管理
@@ -120,7 +117,7 @@ Nixを知らない私
 - システム寄りの構成
 - Mac 入れ替え時に再現したい内容
 
-# Home Manager とは
+# Home Manager って？
 
 - ユーザー単位の環境を宣言的に管理
 - CLI ツールや一部の設定を持たせやすい
@@ -131,7 +128,7 @@ Nixを知らない私
 - ユーザー空間で使う各種パッケージ
 - 開発に必要なコマンド群
 
-# chezmoi で管理しているもの
+# Chezmoiの管理範囲
 
 - `.zshrc` / `config.fish`
 - shell やエディタの設定ファイル
@@ -157,7 +154,7 @@ Nixを知らない私
 - `home-manager` + `nix-darwin` 併用
 - `devShells` も定義中
 
-# リポジトリを見て分かること
+# リポジトリ内容
 
 - `flake.nix` に構成の入口がまとまっている
 - `darwinConfigurations` / `homeConfigurations` が分離
@@ -165,7 +162,7 @@ Nixを知らない私
 - 共通パッケージとマシン依存パッケージを分離
 - `devShells` で言語別開発環境も定義中
 
-# 実際に便利だったこと
+# 実際便利だったこと
 
 - セットアップが数コマンドで済む
 - 新 Mac や再構築時の心理的コストが下がる
