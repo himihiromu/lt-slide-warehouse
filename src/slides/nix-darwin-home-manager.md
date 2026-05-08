@@ -20,18 +20,20 @@ author: himihiromu
     - [zoxide](https://github.com/ajeetdsouza/zoxide)
     - [eza](https://github.com/eza-community/eza)
     - [bat](https://github.com/sharkdp/bat)
-- **今日のゴール**:
-  - Nix を使った Mac 構成管理の実例を共有する
-  - 便利さとつらさの両方を伝える
+
+# 今日のゴール
+
+- Nix を使った Mac 構成管理の実例を共有する
+- 便利さとつらさの両方を伝える
 
 # アジェンダ
 
-- なぜ Mac 構成管理に Nix を使ったのか
-- Nix 自体の特徴と内部構造のさわり
-- `devShell` / `nix-darwin` / `home-manager` / `chezmoi` の役割分担
-- 実際に便利だったこと
-- 実際にハマったこと
-- 今後どう使っていくか
+- 実際に困ってたこと / なぜ Nix を選んだか
+- Nixの特徴 / 内部構造 / flake
+- 今回使うNix技術（devShell / nix-darwin / home-manager / chezmoi）
+- 構成全体像 / リポジトリ内容
+- 実際便利だったこと / ハマったこと
+- 運用の感想 / まとめ
 
 # 実際に困ってたこと
 
