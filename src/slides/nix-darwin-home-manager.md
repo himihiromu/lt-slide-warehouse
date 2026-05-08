@@ -21,8 +21,7 @@ author: himihiromu
     - [eza](https://github.com/eza-community/eza)
     - [bat](https://github.com/sharkdp/bat)
 
-# 今日のゴール
-
+## 今日のゴール
 - Nix を使った Mac 構成管理の実例を共有する
 - 便利さとつらさの両方を伝える
 
