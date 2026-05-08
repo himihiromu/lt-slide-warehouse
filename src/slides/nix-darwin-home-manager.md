@@ -35,13 +35,16 @@ author: himihiromu
 
 # 実際に困っていたこと
 
-- 社内の Intel Mac から M1 Mac への移行を経験した
-- その知識を使って、自宅の Intel Mac の設定見直しもした
-- セットアップのたびに入れるツールや変える設定が多い
-- shell 差分や環境差分で地味に崩れやすい
-- 「今の快適な状態」を再現するのが面倒
-- Mac の移行を簡略化したかった
-- 手順書ベースではなく、構成ベースで管理したかった
+Nixを知らない私
+
+- 社内でIntel MacからM1 Macへ設定移行
+- その知見から自宅PCの設定見直し
+
+辛かったこと
+
+- ツール設定
+- Shell、環境差分
+- 別PC設定の再現
 
 # 代替案として考えたもの
 
@@ -49,79 +52,78 @@ author: himihiromu
 - Ansible による構成管理
 
 ## でもやりたくなかったこと
-- コマンドを順番に列挙して実行していく管理
-- 実行環境や手順差分に引っ張られる構成
+- 順番にコマンドを実行する管理
+- 環境や手順差分に引っ張られる構成
 
 # なぜ Nix を選んだか
 
 - 宣言的に環境を管理できる
+- 手順ではなく「どういう状態にしたいか」で書ける
 - 環境依存を抑えやすい
-- 手順ではなく「最終的にどういう状態にしたいか」で書ける
-- 何を入れているか、どんな構成かをコードで追いやすい
-- 「移行を楽にする」の相性が良さそうだった
+- 構成をコードで追いやすい
+- 移行を楽にするのに相性が良さそう
 
 # Nix 自体のざっくりした特徴
 
 - [Nix](https://nixos.org/)
-  - パッケージ管理と構成管理の仕組み
-- [Nix language syntax](https://nix.dev/manual/nix/2.28/language/syntax)
+  - パッケージ管理 + 構成管理の仕組み
+- [Nix language](https://nix.dev/manual/nix/2.28/language/syntax)
   - 専用の記法を持つ
-- 依存込みの内容から一意な store path が作られる
-- そのため、依存違いの別バージョンが共存しやすい
+- 依存込みで一意な store path が生成される
+- 依存違いの別バージョンが共存しやすい
 
 # Nix の内部構造の話を少しだけ
 
-- パッケージは `/nix/store` 配下に配置される
-- store path にはハッシュが入る
-- 同じツールでも依存やビルド条件が違えば別物として扱える
-- 結果として、バージョン違いの共存や巻き戻しがしやすい
-- この性質が「再現性が高い」と言われる理由の一つ
+- パッケージは `/nix/store` 配下に配置
+- store path にハッシュが含まれる
+- 依存やビルド条件が違えば別物として扱える
+- バージョン違いの共存や巻き戻しがしやすい
+- これが「再現性が高い」と言われる理由の一つ
 
 # flake で最初に混乱した話
 
-- `flakes` は Nix では experimental 扱いの機能
-- ただ、実際に見る構成例や周辺情報では flakes 前提がかなり多い
-- [nix-darwin README](https://github.com/nix-darwin/nix-darwin) でも
-  `Despite being an experimental feature in Nix currently, nix-darwin recommends that beginners use flakes ...`
-  と書かれている
-- 結果として「何が標準なのか」が最初は分かりづらい
+- `flakes` は Nix では experimental 扱い
+- でも構成例や周辺情報は flakes 前提が多い
+- [nix-darwin README](https://github.com/nix-darwin/nix-darwin) も
+  `... nix-darwin recommends that beginners use flakes ...`
+- 初見だと「何が標準？」が分かりづらい
 
 # 今回使っているNix関連技術
 
 - **devShell**
-  - 開発用シェル環境を切り出すための仕組み
+  - プロジェクトごとの開発環境
 - **nix-darwin**
-  - macOS を宣言的に管理するための仕組み
+  - macOS システム設定の宣言的管理
 - **Home Manager**
-  - ユーザー環境や CLI ツール管理向け
+  - ユーザー環境・CLI ツールの管理
 
 # devShell とは
 
-- プロジェクトごとの開発環境を定義できる
-- 言語やツールをローカル環境から切り離せる
-- `flake.nix` に書くことで構成と一緒に管理できる
+- プロジェクトごとの開発環境を定義
+- 言語やツールをローカル環境から切り離す
+- `flake.nix` で構成と一緒に管理
 
 ## 今回の devShell 定義
-- Python / Node.js / Java 8 / Java 21 / Go / Kotlin
-- 各言語のランタイムやツールチェーンを独立して管理
+- Python / Node.js / Java 8 / 21 / Go / Kotlin
+- 各言語のランタイム・ツールチェーンを独立管理
 - 詳細: [my-nix-package-control](https://github.com/himihiromu/my-nix-package-control)
 
 # nix-darwin とは
 
 - macOS 向けの Nix modules
-- macOS システム設定を宣言的に管理できる
-- Homebrew で入れた GUI アプリも管理可能
-- Mac を入れ替えた時の再現に使える
+- システム設定を宣言的に管理
+- Homebrew の GUI アプリも管理可能
+- Mac 入れ替え時の再現に使える
 
 ## 自分の用途
 - macOS 設定
 - Homebrew 経由の GUI アプリ
 - システム寄りの構成
-- Mac を入れ替えた時に再現したい内容
+- Mac 入れ替え時に再現したい内容
 
 # Home Manager とは
 
-- ユーザー単位の環境を宣言的に管理するための仕組み
+- ユーザー単位の環境を宣言的に管理
 - CLI ツールや一部の設定を持たせやすい
 - nix-darwin と併用しやすい
 
@@ -132,14 +134,13 @@ author: himihiromu
 
 # chezmoi で管理しているもの
 
-- `.zshrc`
-- `config.fish`
+- `.zshrc` / `config.fish`
 - shell やエディタの設定ファイル
 - 環境ごとの差分が出やすいファイル群
 
 ## というわけで
-- 構成・パッケージ・OS設定は Nix
-- 設定ファイルは chezmoi
+- 構成・パッケージ・OS設定 → Nix
+- 設定ファイル → chezmoi
 
 # 今回の構成全体像
 
@@ -151,33 +152,33 @@ author: himihiromu
 
 # 成果物の位置付け
 
-- 参考例: [my-nix-package-control](https://github.com/himihiromu/my-nix-package-control)
-- 個人用の Nix パッケージ / 構成管理リポジトリ
+- [my-nix-package-control](https://github.com/himihiromu/my-nix-package-control)
+  - 個人用 Nix パッケージ / 構成管理リポ
 - `flake.nix` で構成全体を管理
-- `home-manager` と `nix-darwin` を併用
-- `devShells` も定義し始めている
+- `home-manager` + `nix-darwin` 併用
+- `devShells` も定義中
 
 # リポジトリを見て分かること
 
 - `flake.nix` に構成の入口がまとまっている
-- `darwinConfigurations` と `homeConfigurations` が分かれている
-- `x86_64-darwin` と `aarch64-darwin` を意識した構成になっている
-- 共通パッケージとマシン依存パッケージを分けている
-- `devShells` で言語別の開発環境も持ち始めている
+- `darwinConfigurations` / `homeConfigurations` が分離
+- `x86_64-darwin` / `aarch64-darwin` を意識した構成
+- 共通パッケージとマシン依存パッケージを分離
+- `devShells` で言語別開発環境も定義中
 
 # 実際に便利だったこと
 
 - セットアップが数コマンドで済む
-- 新しい Mac や再構築時の心理的コストが下がる
+- 新 Mac や再構築時の心理的コストが下がる
 - 何を入れているかをコードで追える
-- 構成の見直しや棚卸しがしやすい
-- Intel / Apple Silicon の違いも意識して整理しやすい
+- 構成の棚卸しがしやすい
+- Intel / Apple Silicon の違いも整理しやすい
 
 # 実際にハマったこと
 
 - 日本語記事が少ない
-- 独自記法や Nix 言語の習得が必要
-- エラーメッセージとの戦いになりがち
+- Nix 言語の習得が必要
+- エラーメッセージとの戦い
 - flakes 周りの立ち位置が初見だと分かりにくい
 - fish の PATH 周りで地味につらい
   - [nix-env.fish](https://github.com/lilyball/nix-env.fish)
@@ -185,24 +186,24 @@ author: himihiromu
 # 運用して感じたこと
 
 - セットアップが楽になるのは本当に良い
-- ただし、そのための構成保守には数倍の時間がかかる
+- ただし構成保守には数倍の時間がかかる
 - かなり「盆栽」になりやすい
-- 全部 Nix に寄せるより、役割分担したほうが現実的
-- chezmoi と併用する形は今のところバランスが良い
+- 全部 Nix より役割分担が現実的
+- chezmoi 併用は今のところバランスが良い
 
 # どう広がりそうか
 
-- 最初は必要な範囲だけ管理するのが良さそう
-- そこから必要に応じて管理対象が広がっていく
-- `nix shell` や `devShell` から入るのも全然あり
-- 一気に全部やるより、使いながら境界を決めるほうが良い
+- 必要な範囲から始めるのが良さそう
+- 必要に応じて管理対象が広がる
+- `nix shell` や `devShell` から入るのもあり
+- 一気に全部やるより使いながら境界を決める
 
 # まとめ
 
-- Nix は Mac 構成管理とかなり相性が良い
-- `nix-darwin` / `home-manager` / `chezmoi` の役割分担で運用しやすくなった
-- 便利さは大きいが、学習コストと保守コストは重い
-- 必要な範囲から始めて、そのまま必要な範囲へ広がっていくのが自然そう
+- Nix は Mac 構成管理と相性が良い
+- `nix-darwin` / `home-manager` / `chezmoi` の役割分担で運用しやすい
+- 便利さは大きいが学習・保守コストは重い
+- 必要な範囲から始めて自然に広げるのが良さそう
 
 # 参考リンク
 
