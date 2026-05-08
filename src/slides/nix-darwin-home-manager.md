@@ -20,18 +20,20 @@ author: himihiromu
     - [zoxide](https://github.com/ajeetdsouza/zoxide)
     - [eza](https://github.com/eza-community/eza)
     - [bat](https://github.com/sharkdp/bat)
-- **今日のゴール**:
-  - Nix を使った Mac 構成管理の実例を共有する
-  - 便利さとつらさの両方を伝える
+
+# 今日のゴール
+
+- Nix を使った Mac 構成管理の実例を共有する
+- 便利さとつらさの両方を伝える
 
 # アジェンダ
 
-- なぜ Mac 構成管理に Nix を使ったのか
-- Nix 自体の特徴と内部構造のさわり
-- `devShell` / `nix-darwin` / `home-manager` / `chezmoi` の役割分担
-- 実際に便利だったこと
-- 実際にハマったこと
-- 今後どう使っていくか
+- 実際に困ってたこと / なぜ Nix を選んだか
+- Nixの特徴 / 内部構造 / flake
+- 今回使うNix技術（devShell / nix-darwin / home-manager / chezmoi）
+- 構成全体像 / リポジトリ内容
+- 実際便利だったこと / ハマったこと
+- 運用の感想 / まとめ
 
 # 実際に困ってたこと
 
@@ -101,7 +103,7 @@ author: himihiromu
 
 ## 今回の devShell 定義
 - Python / Node.js / Java 8 / 21 / Go / Kotlin
-- 各言語のランタイム・ツールチェーンを独立管理
+- 各言語の開発ツールを独立管理
 - 詳細: [my-nix-package-control](https://github.com/himihiromu/my-nix-package-control)
 
 # nix-darwin って？
@@ -158,8 +160,8 @@ author: himihiromu
 
 - `flake.nix` に構成の入口がまとまっている
 - `darwinConfigurations` / `homeConfigurations` が分離
-- `x86_64-darwin` / `aarch64-darwin` を意識した構成
-- 共通パッケージとマシン依存パッケージを分離
+- `x86_64` / `aarch64` を意識しない構成
+- 共通 / マシン依存パッケージを分離
 - `devShells` で言語別開発環境も定義中
 
 # 実際便利だったこと
@@ -206,7 +208,7 @@ AIが下記全てのデメリットを解決する
 - Nix は Mac 構成管理と相性が良い
 - `nix-darwin` / `home-manager` / `chezmoi` の役割分担で運用しやすい
 - 便利さは大きいが学習・保守コストは重い
-- 必要な範囲から始めて自然に広げるのが良さそう
+- 必要な範囲から始めて自然に広げるのが良い
 
 # 参考リンク
 
