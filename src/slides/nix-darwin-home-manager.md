@@ -43,7 +43,7 @@ author: himihiromu
   - Shell、環境差分
   - 別PC設定の再現
 
-# 代替案として考えたもの
+# 代替案の候補
 
 - dotfiles 管理
 - Ansible による構成管理
@@ -60,7 +60,7 @@ author: himihiromu
 - 構成のコード化
 - 移行コマンドの削減
 
-# Nix 自体のざっくりした特徴
+# Nixのざっくり特徴
 
 - [Nix](https://nixos.org/)
   - パッケージ管理 + 構成管理の仕組み
@@ -84,7 +84,7 @@ author: himihiromu
   `... nix-darwin recommends that beginners use flakes ...`
 - 初見だと「何が標準？」が分かりづらい
 
-# 今回使っているNix関連技術
+# 今回使うNix技術
 
 - **devShell**
   - プロジェクトごとの開発環境
@@ -128,7 +128,7 @@ author: himihiromu
 - ユーザー空間で使う各種パッケージ
 - 開発に必要なコマンド群
 
-# chezmoi で管理しているもの
+# Chezmoiの管理範囲
 
 - `.zshrc` / `config.fish`
 - shell やエディタの設定ファイル
@@ -154,7 +154,7 @@ author: himihiromu
 - `home-manager` + `nix-darwin` 併用
 - `devShells` も定義中
 
-# リポジトリを見て分かること
+# リポジトリ内容
 
 - `flake.nix` に構成の入口がまとまっている
 - `darwinConfigurations` / `homeConfigurations` が分離
@@ -162,7 +162,7 @@ author: himihiromu
 - 共通パッケージとマシン依存パッケージを分離
 - `devShells` で言語別開発環境も定義中
 
-# 実際に便利だったこと
+# 実際便利だったこと
 
 - セットアップが数コマンドで済む
 - 新 Mac や再構築時の心理的コストが下がる
