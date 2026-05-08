@@ -103,7 +103,7 @@ author: himihiromu
 
 ## 今回の devShell 定義
 - Python / Node.js / Java 8 / 21 / Go / Kotlin
-- 各言語のランタイム・ツールチェーンを独立管理
+- 各言語の開発ツールを独立管理
 - 詳細: [my-nix-package-control](https://github.com/himihiromu/my-nix-package-control)
 
 # nix-darwin って？
@@ -160,8 +160,8 @@ author: himihiromu
 
 - `flake.nix` に構成の入口がまとまっている
 - `darwinConfigurations` / `homeConfigurations` が分離
-- `x86_64-darwin` / `aarch64-darwin` を意識した構成
-- 共通パッケージとマシン依存パッケージを分離
+- `x86_64` / `aarch64` を意識しない構成
+- 共通 / マシン依存パッケージを分離
 - `devShells` で言語別開発環境も定義中
 
 # 実際便利だったこと
@@ -208,7 +208,7 @@ AIが下記全てのデメリットを解決する
 - Nix は Mac 構成管理と相性が良い
 - `nix-darwin` / `home-manager` / `chezmoi` の役割分担で運用しやすい
 - 便利さは大きいが学習・保守コストは重い
-- 必要な範囲から始めて自然に広げるのが良さそう
+- 必要な範囲から始めて自然に広げるのが良い
 
 # 参考リンク
 
