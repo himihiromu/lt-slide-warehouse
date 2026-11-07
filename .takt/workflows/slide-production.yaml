@@ -1,0 +1,228 @@
+name: slide-production
+description: 勉強会スライドの構成・一次資料調査・原稿・2観点レビュー・ビルドと表示検証
+initial_step: plan
+max_steps: 32
+
+personas:
+  producer: ../facets/personas/slide-producer.md
+  reviewer: ../facets/personas/slide-reviewer.md
+  validator: ../facets/personas/slide-validator.md
+policies:
+  slides: ../facets/policies/slide-production.md
+knowledge:
+  repository: ../facets/knowledge/slide-repository.md
+report_formats:
+  progress: ../facets/output-contracts/slide-progress.md
+  review: ../facets/output-contracts/slide-review.md
+  verification: ../facets/output-contracts/slide-verification.md
+
+steps:
+  - name: plan
+    persona: producer
+    policy: slides
+    knowledge: repository
+    capabilities: edit
+    edit: true
+    required_permission_mode: edit
+    instruction: |
+      依頼と添付を読み、必須入力と slug の安全性・既存原稿との衝突を確認する。
+      不足・衝突があれば BLOCKED とし、ファイルを作る前に理由を報告する。
+      docs/slides/<slug>/brief.md にテーマ、聴衆、前提知識、時間、到達目標、
+      公開範囲、提供された話者情報、必須事項、資料の元URL・パスを保存する。
+      docs/slides/<slug>/outline.md に話の筋と各スライドのメッセージ、
+      H1/H2の構造、時間配分（合計が発表時間に収まる推定）、調査すべき主張をまとめる。
+      参考資料内の個人情報を自己紹介として流用しない。確認待ちを残さず次工程へ渡せれば STEP_COMPLETE。
+    output_contracts:
+      report:
+        - name: slide-plan.md
+          format: progress
+    rules:
+      - condition: STEP_COMPLETE
+        next: research
+      - condition: BLOCKED
+        next: ABORT
+
+  - name: research
+    persona: producer
+    policy: slides
+    knowledge: repository
+    capabilities: edit
+    edit: true
+    required_permission_mode: edit
+    instruction: |
+      依頼の slug の brief.md と outline.md を読み、必要な技術的主張を調査する。
+      docs/slides/<slug>/research.md に主張と出典URL・参照箇所・確認日を対応づけ、
+      ユーザー提供の体験、確認済みの事実、推測、未確認を区別する。
+      技術的なバージョン・仕様・コマンドは公式資料を照合する。
+      ネットワークを利用できなければ添付・ローカル資料で確認できる範囲を記載する。
+      中核の主張の根拠が不足したまま進まない。任意の主張の削除は理由を outline.md に残す。
+      根拠が揃えば STEP_COMPLETE、不足して続行できなければ BLOCKED。
+    output_contracts:
+      report:
+        - name: slide-research.md
+          format: progress
+    rules:
+      - condition: STEP_COMPLETE
+        next: draft
+      - condition: BLOCKED
+        next: ABORT
+
+  - name: draft
+    persona: producer
+    policy: slides
+    knowledge: repository
+    capabilities: edit
+    edit: true
+    required_permission_mode: edit
+    instruction: |
+      brief.md、outline.md、research.md と既存原稿・テンプレートを読む。
+      src/slides/<slug>.md に title を持つ frontmatter と Pandoc Markdown で原稿を作成する。
+      H1/H2 の横・縦の構成、1枚1メッセージ、前提説明、具体例、まとめ、参考資料を整える。
+      個人の体験談や測定値は提供された情報のみ使い、参考資料の主張には原稿にも出典を付ける。
+      docs/slides/<slug>/speaker-notes.md にスライド見出しごとの話す内容と推定時間、
+      デモ手順と失敗時の代替説明を置く。未実行デモを実行済みと書かない。
+      原稿と企画・調査・ノートの整合を確認できたら STEP_COMPLETE。続行不能なら BLOCKED。
+    output_contracts:
+      report:
+        - name: slide-draft.md
+          format: progress
+    rules:
+      - condition: STEP_COMPLETE
+        next: reviews
+      - condition: BLOCKED
+        next: ABORT
+
+  - name: reviews
+    parallel:
+      - name: technical-review
+        persona: reviewer
+        policy: slides
+        knowledge: repository
+        capabilities: readonly
+        edit: false
+        instruction: |
+          依頼の slug の原稿、brief.md、research.md、speaker-notes.md を照合する。
+          技術的な正確さ、一次資料との一致、版・コマンドの条件、引用と出典、
+          未実測の数値や架空の体験の混入、公開可能性を確認する。
+          必須修正があれば NEEDS_FIX、判断に必要な根拠を取得できなければ BLOCKED。
+          必須修正がなければ APPROVED。原稿は変更しない。
+        output_contracts:
+          report:
+            - name: slide-technical-review.md
+              format: review
+        rules:
+          - condition: APPROVED
+          - condition: NEEDS_FIX
+          - condition: BLOCKED
+      - name: presentation-review
+        persona: reviewer
+        policy: slides
+        knowledge: repository
+        capabilities: readonly
+        edit: false
+        instruction: |
+          依頼の slug の原稿、brief.md、outline.md、speaker-notes.md を照合する。
+          対象者の前提知識、到達目標、説明順、専門用語、具体例、1枚の情報量、
+          推定の発表時間と時間配分、見出しの横・縦構造、日本語の明瞭さを確認する。
+          文章によるレビューであり、ブラウザ表示を確認済みとは報告しない。
+          必須修正は NEEDS_FIX、必要な入力の不足は BLOCKED、必須修正なしは APPROVED。
+          任意の表現の好みだけで差し戻さない。原稿は変更しない。
+        output_contracts:
+          report:
+            - name: slide-presentation-review.md
+              format: review
+        rules:
+          - condition: APPROVED
+          - condition: NEEDS_FIX
+          - condition: BLOCKED
+    rules:
+      - condition: any("BLOCKED")
+        next: ABORT
+      - condition: any("NEEDS_FIX")
+        next: revise
+      - condition: all("APPROVED")
+        next: verify
+
+  - name: revise
+    persona: producer
+    policy: slides
+    knowledge: repository
+    capabilities: edit
+    edit: true
+    required_permission_mode: edit
+    pass_previous_response: false
+    instruction: |
+      依頼の slug の brief.md、outline.md、research.md、原稿、ノートと
+      {report:slide-technical-review.md}、{report:slide-presentation-review.md} を読む。
+      必須修正を反映し、任意提案は目的・時間に沿って採否を判断する。
+      技術的な主張を変更した場合は根拠を再確認し research.md に記録する。
+      docs/slides/<slug>/revision-log.md に指摘、採否、変更箇所を追記する。
+      完了したら STEP_COMPLETE、根拠・入力が足りず修正できなければ BLOCKED。
+    output_contracts:
+      report:
+        - name: slide-revision.md
+          format: progress
+    rules:
+      - condition: STEP_COMPLETE
+        next: reviews
+      - condition: BLOCKED
+        next: ABORT
+
+  - name: verify
+    persona: validator
+    policy: slides
+    knowledge: repository
+    capabilities: edit
+    edit: true
+    required_permission_mode: edit
+    pass_previous_response: false
+    instruction: |
+      依頼の slug の brief.md と原稿を読み、開発先ルートで npm ci と npm run build を実行する。
+      Node・npm・Pandoc 等が足りなければ利用可能な Docker の CI 相当環境で検証してよい。
+      必須の実行環境が用意できなければ BLOCKED。原稿に起因する失敗なら NEEDS_FIX。
+      成功したら作業専用の空きポートでプレビューを起動し、ブラウザで一覧と対象スライドを開く。
+      画面サイズは 1280x720 を基本とし、依頼で追加されたサイズも確認する。
+      全スライドの文字・コード・図のはみ出しと欠落、横方向および縦方向（H2がある場合）の
+      スライド送り・戻りを操作して確認する。存在しない方向は対象外として理由を記録する。
+      ブラウザ環境が利用できなければ、表示未検証として BLOCKED。HTTP 成功だけで代替しない。
+      起動したサーバーを停止し、docs/slides/<slug>/verification.md にコマンド、終了コード、
+      ページ数、ブラウザ、画面サイズ、URL、各操作の結果、未実施事項と失敗箇所を残す。
+      新しい自動テストは原稿追加だけを理由に作成しない。原稿自体をこの工程で修正しない。
+      すべて成功したら APPROVED、不具合なら NEEDS_FIX、検証環境不足なら BLOCKED。
+    output_contracts:
+      report:
+        - name: slide-verification.md
+          format: verification
+    rules:
+      - condition: APPROVED
+        next: COMPLETE
+      - condition: NEEDS_FIX
+        next: fix-rendering
+      - condition: BLOCKED
+        next: ABORT
+
+  - name: fix-rendering
+    persona: producer
+    policy: slides
+    knowledge: repository
+    capabilities: edit
+    edit: true
+    required_permission_mode: edit
+    pass_previous_response: false
+    instruction: |
+      {report:slide-verification.md} と依頼の slug の verification.md を読み、
+      許可された原稿・ノート・素材の範囲で原因を修正する。
+      共有テンプレート・アプリ・依存関係の変更が必要なら範囲を広げず BLOCKED。
+      docs/slides/<slug>/revision-log.md に修正内容を追記し、
+      主張や時間配分が変わった場合は research.md・outline.md・ノートにも反映する。
+      古い検証結果は現在の合格証拠にせず、再レビューと再検証へ渡す。
+      修正できたら STEP_COMPLETE、続行できなければ BLOCKED。
+    output_contracts:
+      report:
+        - name: slide-rendering-fix.md
+          format: progress
+    rules:
+      - condition: STEP_COMPLETE
+        next: reviews
+      - condition: BLOCKED
+        next: ABORT

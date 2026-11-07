@@ -24,3 +24,8 @@ pandoc --template src/slides/slide-template/slide-template.md -f markdown -t rev
 pandoc --print-default-data-file reference.pptx > custom-reference.pptx
 pandoc -f markdown  --slide-level 2 --reference-doc custom-reference.pptx src\slides\pandoc-introduction.md -o output.pptx
 ```
+
+## TAKT で勉強会スライドを作る
+
+構成・調査・原稿・レビュー・ビルドと表示検証を行う `slide-production` を利用できます。
+[利用手順](docs/slide-production.md)と[依頼の雛形](docs/templates/slide-order.md)を参照してください。
