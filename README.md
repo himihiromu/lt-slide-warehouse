@@ -6,9 +6,11 @@ LT資料をmdでGit管理し、GitHub Pagesでホストする為の個人リポ�
 
 ## ビルド方法
 
-Node、Pandocのインストールが必須
+Node.js 22.23.4 以上、npm 9.6.5 以上、Pandoc のインストールが必須。
+依存関係は CI と同じく npm でインストールする。
 
 ```bash
+npm ci
 npm run build
 ```
 
