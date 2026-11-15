@@ -23,6 +23,7 @@ author: himihiromu
 - どういう経緯で作られたのか
 - 普段のIMEとの入力の違い
 - 便利そうなところ / 慣れが必要なところ
+- Vim・Mac・Windowsで使うには
 
 # SKKって？
 
@@ -126,7 +127,7 @@ author: himihiromu
   - 「漢字」「を」「書く」と指定しながら進める
 - [Mozcのキー定義](https://github.com/google/mozc/blob/master/src/data/keymap/ms-ime.tsv)
 
-## どこを自分で決めるか
+## 変換の区切り方
 
 - Google日本語入力 / Mozc
   - IMEが変換の区切りを提示
@@ -150,14 +151,25 @@ author: himihiromu
 - 辞書によって、出てくる候補が変わる
 - 慣れたら誰でも速くなる、とは言い切れない
 
-# よくありそうな疑問
+# Emacs以外のSKK
 
-## Emacs以外でも使える？
+## Vim / Neovimで使うなら
 
-- Emacs向けのDDSKK以外にも実装がある
-- 例えば [CSKK](https://naokiri.github.io/cskk-docs/)
-  - IMEからSKK方式で入力するためのライブラリ
-- 追加機能・設定方法は実装ごとに確認
+- [skkeleton](https://github.com/vim-skk/skkeleton)
+  - Vim / Neovimの中でSKK入力できるプラグイン
+- denops.vimとDenoを使用
+- まずエディター内で試したいときの選択肢
+- 辞書やキー割り当てはプラグイン側で設定
+  - [設定方法](https://github.com/vim-skk/skkeleton/tree/main/doc)
+
+## Mac / Windowsでも使える
+
+- macOS：[AquaSKK](https://github.com/codefirst/aquaskk)
+  - Macの入力メソッドとして使うSKK実装
+  - [配布ページ](https://github.com/codefirst/aquaskk/releases)
+- Windows：[CorvusSKK](https://github.com/nathancorvussolis/corvusskk)
+  - WindowsのIMEとして使うSKK実装
+  - [配布ページ](https://github.com/nathancorvussolis/corvusskk/releases)
 
 # まず試すなら
 
@@ -185,7 +197,8 @@ author: himihiromu
 
 ## この資料について
 
-- 内容の出典確認日：2026-11-15
+- 基本説明の出典確認日：2026-11-15
+- 実装紹介の出典確認日：2026-11-16
 - 文体・構成の調整日：2026-11-16
 - 操作は公式文書に基づく説明例
 - 特定バージョン同士の実機比較・速度測定は未実施
