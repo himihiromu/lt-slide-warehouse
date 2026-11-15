@@ -1,216 +1,244 @@
 ---
-title: SKK入門 — 自分で区切る日本語入力
-description: SKKの誕生、入力の仕組み、Google日本語入力・Mozcとの比較
+title: SKKってどういう日本語入力？
+description: SKKの仕組み・開発の経緯・Google日本語入力やMozcとの違い
+author: himihiromu
 ---
 
+# SKKって？
 
+# 自己紹介
 
-## SKK入門 {.skk-slide}
+## 自己紹介情報
 
-<style>
-.reveal .skk-slide { text-align: left; font-size: 28px; line-height: 1.55; }
-.reveal .skk-slide h2 { font-size: 1.65em; color: #8bd5ca; line-height: 1.3; margin-bottom: 0.65em; }
-.reveal .skk-slide p { margin: 0.6em 0; }
-.reveal .skk-slide li { margin: 0.35em 0; }
-.reveal .skk-slide table { font-size: 0.75em; width: 100%; }
-.reveal .skk-slide th, .reveal .skk-slide td { padding: 0.45em; }
-.reveal .skk-slide .source { font-size: 0.52em; color: #b8c0cc; margin-top: 1.2em; }
-.reveal .skk-slide .lead { font-size: 1.35em; margin: 1em 0; }
-.reveal .skk-slide code { color: #f5d890; }
-.reveal .skk-slide .steps { padding: 0.7em; border-left: 4px solid #8bd5ca; background: #282d35; }
-</style>
+- **名前**: [himihiromu](https://github.com/himihiromu)
+- **今回のテーマ**: SKK
+- **今日のゴール**
+  - SKKが何をしているのか知ってもらう
+  - 普段の日本語入力と比べてみる
 
-<div class="lead">自分で区切る、日本語入力。</div>
+# 目次
 
-どんな仕組みで、なぜ生まれたのか？<br>
-Google日本語入力・Mozcと比べて考える。
+- SKKって？
+- どうやって入力するのか
+- どういう経緯で作られたのか
+- Google日本語入力 / Mozcとの違い
+- 便利そうなところ / 慣れが必要なところ
 
-日本語入力を普段使う人向け・約15分<br>
-資料の確認日：2026-11-15
+# SKKって？
 
-::: notes
-画面右下の矢印または左右キーで進む。想定時間は仮置きであり、開催条件は未指定。
-:::
+## ざっくり概要
 
-## 今日持ち帰ること {.skk-slide}
+- Simple Kana to Kanji conversion program
+- かな漢字変換を行う日本語入力
+- 漢字にしたい範囲を自分で指定する
+- Emacs向けの実装が [DDSKK](https://github.com/skk-dev/ddskk)
 
-1. SKKでは、変換する範囲を自分で指定する。
-2. 1987年の日本語入力環境の課題から生まれた。
-3. 入力方式の違いと、製品・実装の違いを分けて考える。
+## 普段の入力と何が違う？
 
-::: notes
-導入1分。使い方4分、歴史3分、比較5分、まとめ2分が目安。
-:::
+- 変換したい部分の先頭を大文字で入力
+- 送り仮名の始まりも大文字で指定
+- 区切りを入力する人が教える
+  - [DDSKKの基本操作](https://ddskk.readthedocs.io/ja/latest/05_basic.html)
 
-## SKKとは？ {.skk-slide}
+# SKKの基本的な使い方
 
-**Simple Kana to Kanji conversion program**
+## ひらがなを入力
 
-- 読みから漢字へ変換する日本語入力。
-- 変換の始まりや送り仮名の位置を、入力する人が示す。
-- Emacs上の実装としてDDSKKがある。
+- かなモードで `kanji` → かんじ
+- 小文字で打つと、ひらがなとして確定していく
+- 漢字にしたい場合は `Kanji`
+  - 最初の `K` を大文字にする
 
-<div class="source">出典：<a href="https://github.com/skk-dev/ddskk">DDSKK README</a>、<a href="https://ddskk.readthedocs.io/ja/latest/05_basic.html">DDSKK 基本的な使い方</a></div>
+## 漢字に変換
 
-## 最初に、ひらがなを打つ {.skk-slide}
+- `Kanji` → ▽かんじ
+- `Space` → ▼漢字
+- もう一度 `Space` → 次の候補
+- `Ctrl+J` → 確定
+  - 候補の順番は辞書や学習状態で変わる
 
-かなモードで小文字のローマ字を入力する。
+## この三角は何？
 
-<div class="steps"><code>kanji</code> → かんじ</div>
+- `▽`：変換する読みを入力中
+- `▼`：変換候補を選択中
+- 今何をしているかが表示される
+  - 操作・表示は [DDSKKの基本操作](https://ddskk.readthedocs.io/ja/latest/05_basic.html) に基づく例
 
-通常のひらがなは、そのまま確定していく。<br>
-漢字に変えたいときは、先頭を大文字にする。
+## 送り仮名がある場合
 
-<div class="source">以下の状態表示はDDSKKの基本操作に基づく説明例。キー設定・候補順は実装や辞書により異なる。<br>出典：<a href="https://ddskk.readthedocs.io/ja/latest/05_basic.html">DDSKK 基本的な使い方</a></div>
+- 「動く」を入力したい
+  - `UgoKu` → ▼動く
+- `U`：漢字にする部分の始まり
+- `K`：送り仮名「く」の始まり
+- 送り仮名を入力すると変換が始まる
 
-## 「漢字」に変換する {.skk-slide}
+## 文章にしてみる
 
-| 操作 | 表示例 | 意味 |
-|---|---|---|
-| `Kanji` | ▽かんじ | 大文字で変換開始 |
-| `Space` | ▼漢字 | 辞書の候補を表示 |
-| さらに `Space` | ▼幹事 | 次の候補へ |
-| `Ctrl+J` | 幹事 | 選んだ候補を確定 |
+- 「漢字を書く」
+  - `Kanji` → `Space` → 「漢字」を選択
+  - 続けて `wo` → 「漢字を」
+  - `KaKu` → 「書く」を選んで確定
+- 続きを入力すると、直前の候補も確定
+  - [CSKKの操作例](https://naokiri.github.io/cskk-docs/)
 
-`▽` は読みを入力中、`▼` は候補を選択中。
+# なんでこの仕組みになった？
 
-<div class="source">候補順は説明用。出典：<a href="https://ddskk.readthedocs.io/ja/latest/05_basic.html">DDSKK 基本的な使い方</a></div>
+## 1987年の日本語入力環境
 
-## 送り仮名も自分で指定 {.skk-slide}
+- 原作者は佐藤雅彦氏
+- フランス出張先の日本語環境が必要になった
+- 当時はPCのかな漢字変換を使ってUnixへ入力
+- 重いPCを持っていくのはつらい
+  - [原作者の回想](https://github.com/skk-dev/ddskk/blob/master/READMEs/history.md)
 
-<div class="steps"><code>UgoKu</code> → ▼動く</div>
+## 解決したかったこと
 
-- 最初の `U`：漢字にする部分の始まり。
-- 途中の `K`：送り仮名「く」の始まり。
-- 送り仮名の入力で変換が始まる。
+- PCの入力機能に依存したくない
+- Unix内で日本語入力を完結させたい
+- Nemacs上で動くものが欲しい
+- Emacs Lispで作ればよいのでは？
 
-「どこから送り仮名か」という情報もキー操作で渡す。
+## 開発のきっかけ
 
-<div class="source">出典：<a href="https://ddskk.readthedocs.io/ja/latest/05_basic.html">DDSKK 基本的な使い方・送り仮名のある語</a></div>
+- 先行する変換システム **Kanzen** の実演
+  - 大文字で漢字の開始位置を指定する仕組み
+- 1987年7月頃に開発開始
+- 他の仕事をしながら、2〜3週間で動くものを目指した
+  - [『bit』1991年4月号の記事の許諾転載](https://github.com/skk-dev/ddskk/blob/master/READMEs/history.md)
 
-## 同じ文章を打ってみる {.skk-slide}
+## 単純にするための役割分担
 
-**漢字を書く**
+- 入力する人
+  - 漢字の始まり・送り仮名の位置を指定
+- システム
+  - 指定された読みから候補を出す
+- 区切りの情報をキー操作で渡す、という考え方
+  - 基本操作から見た本資料の整理
 
-| 段階 | SKKの操作例 |
-|---|---|
-| 漢字 | `Kanji` → `Space` → 候補を選ぶ |
-| を | 続けて `wo`（直前の候補も確定） |
-| 書く | `KaKu` → 候補を選ぶ → 確定 |
+# Google日本語入力 / Mozcと比較
 
-文章の途中で、変換する単位を明示していく。
+## 同じ文章を入力するなら
 
-<div class="source">出典：<a href="https://naokiri.github.io/cskk-docs/">CSKK マニュアル</a>。基本操作の説明例であり、実機の録画ではない。</div>
+- Google日本語入力 / Mozcの一般的な操作
+  - `kanjiwokaku` を続けて入力して変換
+  - 必要なら候補や文節の区切りを調整
+- SKKの基本操作
+  - 「漢字」「を」「書く」と指定しながら進める
+- [Mozcのキー定義](https://github.com/google/mozc/blob/master/src/data/keymap/ms-ime.tsv)
 
-## 1987年、なぜ作った？ {.skk-slide}
+## どこを自分で決めるか
 
-**佐藤雅彦氏が、フランス出張先の日本語環境を用意するため。**
+- Google日本語入力 / Mozc
+  - IMEが変換の区切りを提示
+  - 合わなければ自分で直す
+- SKK
+  - 入力する時点で区切りを指定
+  - その範囲で候補を選ぶ
 
-- Nemacsで日本語を扱えても、入力環境には課題があった。
-- 当時はPC側のかな漢字変換を使ってUnixへ入力していた。
-- 重いPCを持参せず、Unix内で完結させたかった。
+## 予測や補助機能は？
 
-<div class="source">出典：<a href="https://github.com/skk-dev/ddskk/blob/master/READMEs/history.md">SKKの誕生秘話</a>（原作者の『bit』1991年4月号の記事を許諾転載）。要約。</div>
+- Mozcにも予測・サジェストがある
+  - [入力状態の説明](https://github.com/google/mozc/blob/master/src/data/keymap/README.md)
+- Google日本語入力は日付変換・読み間違い訂正などを提供
+  - [公式の機能紹介](https://www.google.co.jp/intl/jp/ime/feature.html)
+- DDSKKにも補完や送り仮名の自動処理などがある
+  - [応用機能](https://github.com/skk-dev/ddskk/blob/master/docs/06_apps.rst)
 
-::: notes
-現在のIMEへの不満が直接の開発理由だった、と歴史を置き換えない。これは当時の環境に関する原作者の説明。
-:::
+# Google日本語入力とMozcの違い
 
-## 短期間で動く、単純な設計 {.skk-slide}
+## 同じものなの？
 
-- 大文字で漢字の開始位置を指定する **Kanzen** に影響を受けた。
-- 1987年7月頃、Emacs Lispで開発を開始。
-- 他の仕事と並行し、2〜3週間で動くものを目指した。
+- MozcはGoogle日本語入力に由来するOSS
+- Google日本語入力は製品として配布
+- Mozcはソースコードを公開
+- 同じ辞書・同じ変換結果とは限らない
+  - [Mozc README](https://github.com/google/mozc)
 
-<div class="lead">必要な区切りを、人からシステムへ伝える。</div>
+## 辞書やデータが違う
 
-<div class="source">開発時期・経緯：<a href="https://github.com/skk-dev/ddskk/blob/master/READMEs/history.md">原作者の回想</a>。最後の一文は本資料による設計の整理。</div>
+- Google日本語入力
+  - Google内部の辞書・補助データを使用
+- Mozc
+  - OSS辞書を使用
+  - 一部の補助データはプレースホルダーのみ
+- 詳細は [About Branding](https://github.com/google/mozc/blob/master/docs/about_branding.md)
 
-## 何を解決する仕組みか {.skk-slide}
+## 配布・品質保証も違う
 
-**当初の課題**<br>
-持ち運ぶPCに依存せず、Nemacsで日本語を入力したい。
+- Google日本語入力
+  - バイナリを配布、stable版でQAを実施
+- Mozc
+  - ソースコードを提供、Googleの公式QA保証なし
+- 使っている実装・辞書も含めて比較する必要がある
+  - [公式の比較表](https://github.com/google/mozc/blob/master/docs/about_branding.md)
 
-**操作上の特徴**<br>
-変換開始と送り仮名を明示するので、指定した範囲で候補を選べる。
+# 便利そうなところ
 
-**利用者が引き受けること**<br>
-区切りを決める操作と、その入力習慣を身につける。
+- 変換する範囲を自分で決められる
+- 指定した語ごとに候補を選んで進められる
+- 入力と修正の流れを把握しやすそう
+  - ここは仕組みから考えた利点
+  - 入力速度を測った結果ではない
 
-<div class="source">出典：<a href="https://github.com/skk-dev/ddskk/blob/master/READMEs/history.md">開発の経緯</a>、<a href="https://ddskk.readthedocs.io/ja/latest/05_basic.html">基本操作</a>。利点・負担の整理は本資料の考察。</div>
+# 慣れが必要なところ
 
-## Google日本語入力・Mozcと比較 {.skk-slide}
+- 大文字で区切る操作を覚える必要がある
+- 送り仮名の位置も意識する
+- 辞書によって、出てくる候補が変わる
+- 慣れたら誰でも速くなる、とは言い切れない
 
-| 観点 | SKKの基本操作 | Google日本語入力・Mozcの一般的な操作 |
-|---|---|---|
-| 入力する単位 | 変換箇所を指定して進める | 読みを続けて入れ、まとめて変換できる |
-| 区切り | 利用者が入力時に示す | IMEが提示し、必要なら利用者が調整 |
-| 修正する場面 | 指定した語の候補を選ぶ | 候補や文節の区切りを調整 |
+# よくありそうな疑問
 
-「漢字を書く」なら、後者は `kanjiwokaku` を入れて変換する例を考えられる。
+## Emacs以外でも使える？
 
-<div class="source">出典：<a href="https://ddskk.readthedocs.io/ja/latest/05_basic.html">DDSKK基本操作</a>、<a href="https://github.com/google/mozc/blob/master/src/data/keymap/ms-ime.tsv">Mozcキー定義（文節操作を含む）</a>。設定・入力スタイルで操作は変わる。</div>
+- Emacs向けのDDSKK以外にも実装がある
+- 例えば [CSKK](https://naokiri.github.io/cskk-docs/)
+  - IMEからSKK方式で入力するためのライブラリ
+- 追加機能・設定方法は実装ごとに確認
 
-## 予測や辞書も比較の軸 {.skk-slide}
+## Google日本語入力は文章を送信する？
 
-- Mozcには変換・予測・サジェストの入力状態がある。
-- Google日本語入力は日付変換や読み間違い訂正などを案内している。
-- SKK系も、補完や送り仮名の自動処理などの拡張を持つ実装がある。
+- 公式FAQでは、入力した単語・文章は送信しないと説明
+- 通信機能全般の有無とは別の話
+- 入力方式の違いと通信の話は分けて考える
+  - [Google日本語入力 FAQ](https://www.google.co.jp/intl/jp/ime/feature.html)
 
-**基本方式と追加機能を分けて見る。**
+# まず試すなら
 
-<div class="source">出典：<a href="https://github.com/google/mozc/blob/master/src/data/keymap/README.md">Mozcの入力状態</a>、<a href="https://www.google.co.jp/intl/jp/ime/feature.html">Google日本語入力の機能</a>、<a href="https://github.com/skk-dev/ddskk/blob/master/docs/06_apps.rst">DDSKK 応用</a></div>
+- 同じ短文を普段のIMEとSKKで入力
+- 迷った操作・直した箇所を比べる
+- 普段使うアプリや辞書との相性を見る
+- 区切りを自分で指定する操作が合うか、触ってみる
 
-## Google日本語入力 ≠ Mozc {.skk-slide}
+# まとめ
 
-MozcはGoogle日本語入力に由来するOSSプロジェクト。
+- SKKは自分で区切りを指定する日本語入力
+- 1987年の日本語入力環境の課題から生まれた
+- 大文字と送り仮名の指定が基本
+- Google日本語入力 / Mozcとは入力の進め方が違う
+- 便利さと操作の慣れ、両方を見て判断したい
 
-| 観点 | Google日本語入力 | Mozc |
-|---|---|---|
-| 提供形態 | 製品のバイナリ | ソースコード |
-| システム辞書 | Google内部の辞書 | OSS辞書 |
-| 一部の補助データ | 製品用データ | プレースホルダーのみのものもある |
-| GoogleによるQA | stable版で実施 | 公式QAの保証なし |
+# 参考リンク
 
-<div class="source">出典：<a href="https://github.com/google/mozc">Mozc README</a>、<a href="https://github.com/google/mozc/blob/master/docs/about_branding.md">About Branding</a>（2026-11-15確認）。同じ候補・変換精度になるとは限らない。</div>
+## SKK関連
 
-## 誤解しやすいところ {.skk-slide}
-
-- **「SKKなら必ず速い」？**<br>
-  習熟・文章・辞書次第。本資料では速度を測定していない。
-- **「SKKはEmacs専用」？**<br>
-  CSKKのようにIMEから利用するための実装もある。
-- **「Google日本語入力は文章を送信する」？**<br>
-  公式FAQは、入力した単語や文章は送信しないと説明している。
-
-<div class="source">出典：<a href="https://naokiri.github.io/cskk-docs/">CSKK</a>、<a href="https://www.google.co.jp/intl/jp/ime/feature.html">Google日本語入力FAQ</a>。通信機能全般の有無とは別の話。</div>
-
-## 自分に合うか、試す観点 {.skk-slide}
-
-- 自分で区切る操作を、扱いやすいと感じるか。
-- よく書く語や固有名詞を、辞書から出せるか。
-- 普段のエディターやアプリで使えるか。
-- 続けて入力する方法と比べ、修正の負担はどう変わるか。
-
-まずは同じ短文を入力し、**迷った操作と直した箇所**を比べてみる。
-
-<div class="source">ここは本資料による試用の提案。製品の優劣を測定した結果ではない。</div>
-
-## まとめ {.skk-slide}
-
-<div class="lead">SKKは、区切りの情報を<br>入力する人が渡す日本語入力。</div>
-
-- 出発点は1987年の日本語入力環境の課題。
-- 大文字と送り仮名の指定で、変換の範囲を伝える。
-- 比較するときは方式・実装・辞書を分けて考える。
-
-## 参考資料 {.skk-slide}
-
-- [DDSKK README](https://github.com/skk-dev/ddskk) / [原作者の回想](https://github.com/skk-dev/ddskk/blob/master/READMEs/history.md)
-- [DDSKK 基本的な使い方](https://ddskk.readthedocs.io/ja/latest/05_basic.html) / [応用](https://github.com/skk-dev/ddskk/blob/master/docs/06_apps.rst)
+- [DDSKK](https://github.com/skk-dev/ddskk)
+- [原作者の回想・開発の歴史](https://github.com/skk-dev/ddskk/blob/master/READMEs/history.md)
+- [DDSKK 基本的な使い方](https://ddskk.readthedocs.io/ja/latest/05_basic.html)
+- [DDSKK 応用機能](https://github.com/skk-dev/ddskk/blob/master/docs/06_apps.rst)
 - [CSKK マニュアル](https://naokiri.github.io/cskk-docs/)
-- [Mozc README](https://github.com/google/mozc) / [About Branding](https://github.com/google/mozc/blob/master/docs/about_branding.md)
-- [Mozc入力状態](https://github.com/google/mozc/blob/master/src/data/keymap/README.md) / [キー定義](https://github.com/google/mozc/blob/master/src/data/keymap/ms-ime.tsv)
+
+## Google日本語入力 / Mozc関連
+
+- [Mozc](https://github.com/google/mozc)
+- [Google日本語入力との違い](https://github.com/google/mozc/blob/master/docs/about_branding.md)
+- [Mozcの入力状態](https://github.com/google/mozc/blob/master/src/data/keymap/README.md)
+- [Mozcのキー定義](https://github.com/google/mozc/blob/master/src/data/keymap/ms-ime.tsv)
 - [Google日本語入力の機能・FAQ](https://www.google.co.jp/intl/jp/ime/feature.html)
 
-<div class="source">確認日：2026-11-15。Webドキュメントに基づく比較。特定の実装バージョン同士の実機比較は未実施。</div>
+## この資料について
+
+- 内容の出典確認日：2026-11-15
+- 文体・構成の調整日：2026-11-16
+- 操作は公式文書に基づく説明例
+- 特定バージョン同士の実機比較・速度測定は未実施
