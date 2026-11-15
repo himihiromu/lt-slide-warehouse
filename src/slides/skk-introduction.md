@@ -21,7 +21,7 @@ author: himihiromu
 - SKKって？
 - どうやって入力するのか
 - どういう経緯で作られたのか
-- Google日本語入力 / Mozcとの違い
+- 普段のIMEとの入力の違い
 - 便利そうなところ / 慣れが必要なところ
 
 # SKKって？
@@ -135,43 +135,6 @@ author: himihiromu
   - 入力する時点で区切りを指定
   - その範囲で候補を選ぶ
 
-## 予測や補助機能は？
-
-- Mozcにも予測・サジェストがある
-  - [入力状態の説明](https://github.com/google/mozc/blob/master/src/data/keymap/README.md)
-- Google日本語入力は日付変換・読み間違い訂正などを提供
-  - [公式の機能紹介](https://www.google.co.jp/intl/jp/ime/feature.html)
-- DDSKKにも補完や送り仮名の自動処理などがある
-  - [応用機能](https://github.com/skk-dev/ddskk/blob/master/docs/06_apps.rst)
-
-# Google日本語入力とMozcの違い
-
-## 同じものなの？
-
-- MozcはGoogle日本語入力に由来するOSS
-- Google日本語入力は製品として配布
-- Mozcはソースコードを公開
-- 同じ辞書・同じ変換結果とは限らない
-  - [Mozc README](https://github.com/google/mozc)
-
-## 辞書やデータが違う
-
-- Google日本語入力
-  - Google内部の辞書・補助データを使用
-- Mozc
-  - OSS辞書を使用
-  - 一部の補助データはプレースホルダーのみ
-- 詳細は [About Branding](https://github.com/google/mozc/blob/master/docs/about_branding.md)
-
-## 配布・品質保証も違う
-
-- Google日本語入力
-  - バイナリを配布、stable版でQAを実施
-- Mozc
-  - ソースコードを提供、Googleの公式QA保証なし
-- 使っている実装・辞書も含めて比較する必要がある
-  - [公式の比較表](https://github.com/google/mozc/blob/master/docs/about_branding.md)
-
 # 便利そうなところ
 
 - 変換する範囲を自分で決められる
@@ -196,13 +159,6 @@ author: himihiromu
   - IMEからSKK方式で入力するためのライブラリ
 - 追加機能・設定方法は実装ごとに確認
 
-## Google日本語入力は文章を送信する？
-
-- 公式FAQでは、入力した単語・文章は送信しないと説明
-- 通信機能全般の有無とは別の話
-- 入力方式の違いと通信の話は分けて考える
-  - [Google日本語入力 FAQ](https://www.google.co.jp/intl/jp/ime/feature.html)
-
 # まず試すなら
 
 - 同じ短文を普段のIMEとSKKで入力
@@ -220,21 +176,12 @@ author: himihiromu
 
 # 参考リンク
 
-## SKK関連
-
 - [DDSKK](https://github.com/skk-dev/ddskk)
 - [原作者の回想・開発の歴史](https://github.com/skk-dev/ddskk/blob/master/READMEs/history.md)
 - [DDSKK 基本的な使い方](https://ddskk.readthedocs.io/ja/latest/05_basic.html)
-- [DDSKK 応用機能](https://github.com/skk-dev/ddskk/blob/master/docs/06_apps.rst)
 - [CSKK マニュアル](https://naokiri.github.io/cskk-docs/)
 
-## Google日本語入力 / Mozc関連
-
-- [Mozc](https://github.com/google/mozc)
-- [Google日本語入力との違い](https://github.com/google/mozc/blob/master/docs/about_branding.md)
-- [Mozcの入力状態](https://github.com/google/mozc/blob/master/src/data/keymap/README.md)
 - [Mozcのキー定義](https://github.com/google/mozc/blob/master/src/data/keymap/ms-ime.tsv)
-- [Google日本語入力の機能・FAQ](https://www.google.co.jp/intl/jp/ime/feature.html)
 
 ## この資料について
 
