@@ -14,6 +14,27 @@ npm ci
 npm run build
 ```
 
+## スライドの作成・確認
+
+原稿は `src/slides/` 直下のMarkdownへ追加する。タイトルはYAMLの `title` に記入し、`##` 見出しでスライドを区切る。例: `src/slides/skk-introduction.md`。
+
+```bash
+npm run dev -- --host 127.0.0.1 --port 4321
+```
+
+一覧: http://127.0.0.1:4321/lt-slide-warehouse/slides/
+
+SKK入門: http://127.0.0.1:4321/lt-slide-warehouse/slides/skk-introduction/
+
+Pandoc変換はAstroの設定読み込み時に実行するため、原稿の追加・編集後は開発サーバーを再起動する。
+
+```bash
+npm run astro -- dev stop
+npm run dev -- --host 127.0.0.1 --port 4321
+```
+
+`src/content/slides/` は生成先なので直接編集しない。ビルド成果物の確認には `npm run build` の後に `npm run preview` を使う。
+
 ## Pandoc変換コマンド
 
 ```bash
