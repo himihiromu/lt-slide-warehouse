@@ -26,6 +26,8 @@ npm run dev -- --host 127.0.0.1 --port 4321
 
 SKK入門: http://127.0.0.1:4321/lt-slide-warehouse/slides/skk-introduction/
 
+TAKT紹介: http://127.0.0.1:4321/lt-slide-warehouse/slides/takt-introduction/
+
 Pandoc変換はAstroの設定読み込み時に実行するため、原稿の追加・編集後は開発サーバーを再起動する。
 
 ```bash
